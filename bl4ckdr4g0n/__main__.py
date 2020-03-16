@@ -4,32 +4,29 @@ import re
 from typing import Optional, List
 
 from telegram import Message, Chat, Update, Bot, User
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import Unauthorized, BadRequest, TimedOut, NetworkError, ChatMigrated, TelegramError
 from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown
 import bl4ckdr4g0n
-from bl4ckdr4g0n import dispatcher, updater, TOKEN, WEBHOOK, SUDO_USERS, OWNER_ID, CERT_PATH, PORT, URL, LOGGER, \
-    ALLOW_EXCL
-
-
-#Needed to dynamically load modules
-#NOTE: Module order is not guaranteed, specify that in the config file!
+from bl4ckdr4g0n import ALLOW_EXCL
+# needed to dynamically load modules
+# NOTE: Module order is not guaranteed, specify that in the config file!
 from bl4ckdr4g0n.modules import ALL_MODULES
+from bl4ckdr4g0n.modules.connection import connected
 from bl4ckdr4g0n.modules.helper_funcs.chat_status import is_user_admin
 from bl4ckdr4g0n.modules.helper_funcs.misc import paginate_modules
 from bl4ckdr4g0n.modules.translations.strings import tld, tld_help
-from bl4ckdr4g0n.modules.connection import connected
-
-PM_START = """Hlw {}, my name is *{}* ! 
-want any Help click - /help
-
-Want to,
-Manager Your Group [Click Here](http://t.me/SarikaRoBot?startgroup=true)
-
-Handcrafted by *Genius* 🇮🇳
+PM_START = """Hello {}, my name is {}!
+I'm here to help you manage your groups!.
+you can meet my master in this [Group](https://t.me/Miss_Pious)
+you can ask everything about me in [Support Group](https://t.me/Miss_Pious)
+I'm a group manager bot and my noob master is [@SourabhXD](https://t.me/SourabhXD)
+Want to add me to your group? [Click here!](t.me/PiousS_bot?startgroup=true)
+Click (Help) button to find out more.
 """
+
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -131,7 +128,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             send_start(bot, update)
     else:
         try:
-            update.effective_message.reply_text("Hlw; how are you ?")
+            update.effective_message.reply_text("Yo! whadup?")
         except:
             print("Nut")
 
@@ -144,6 +141,7 @@ def send_start(bot, update):
         pass
 
     #chat = update.effective_chat  # type: Optional[Chat] and unused variable
+    first_name = update.effective_user.first_name
     text = PM_START
 
     keyboard = [[InlineKeyboardButton(text="📢 Support Group", url="https://t.me/LucySupportChat")]]
